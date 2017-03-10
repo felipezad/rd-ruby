@@ -3,12 +3,12 @@ class LoginController < ApplicationController
 	def auth
 		email = params[:user][:email]
 		password = params[:user][:password]
-		
-		redirect_to users_path
+		user = (User.find_by email: email, password:password)
+		if user
+			redirect_to users_path
+		else
+			redirect_to :root
+		end
 	end
 	
-	private
-		def login_params
-			params.require(:userLogin).permit(:email,:password)
-		end
 end
